@@ -1,19 +1,22 @@
 class Stack():
     def __init__(self, capacity) -> None:
         self.n = 0
-        self.stack_array = [0] * capacity
+        self.stack_array = [None] * capacity
         
     def is_empty(self) -> bool:
         return self.n == 0
     
     def push(self, data) -> None:
+        if self.n == len(self.stack_array):
+            self.resize(len(self.stack_array))
+            
         self.stack_array[self.n] = data
         self.n += 1
         
     def pop(self) -> int:
         if not self.is_empty():
             data = self.stack_array[self.n]
-            self.stack_array[self.n] = 0
+            self.stack_array[self.n] = None
             self.n -= 1
         
             return data
@@ -27,9 +30,12 @@ class Stack():
             
         return nodes_data
     
+    def resize(self, capacity):
+        self.stack_array.extend([None] * capacity)
+    
     
 if __name__ == '__main__':
-    stack = Stack(capacity=10)
+    stack = Stack(capacity=2)
     
     stack.push(1)
     stack.push(2)
